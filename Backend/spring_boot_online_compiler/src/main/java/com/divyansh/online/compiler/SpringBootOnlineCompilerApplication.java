@@ -9,5 +9,4 @@ public class SpringBootOnlineCompilerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootOnlineCompilerApplication.class, args);
 	}
-
 }
