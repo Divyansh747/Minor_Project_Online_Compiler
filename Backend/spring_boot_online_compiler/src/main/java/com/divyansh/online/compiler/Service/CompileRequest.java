@@ -79,7 +79,18 @@ public class CompileRequest {
 		return false;
 	}
 
-	private Result execProgram(String folder, String image, MultipartFile outpFile) {
+	private Result execProgram(String folder, String image, MultipartFile outpFile) throws IOException, InterruptedException {
+		
+		int status;
+		String[] docker = new String[] {"docker image build", folder, "-t", image};
+		ProcessBuilder processbuild = new ProcessBuilder(docker);
+		Process process = processbuild.start();
+		status = process.waitFor();
+		
+		String[] dockerRun = new String[] { "docker run --rm", image };
+		ProcessBuilder processrun = new ProcessBuilder(dockerRun);
+		Process processr = processrun.start();
+		status = processr.waitFor();
 		
 		return null;
 	}
