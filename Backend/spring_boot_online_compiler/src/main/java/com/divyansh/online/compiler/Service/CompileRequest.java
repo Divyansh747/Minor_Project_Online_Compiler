@@ -1,5 +1,6 @@
 package com.divyansh.online.compiler.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.divyansh.online.compiler.Entity.Response;
 import com.divyansh.online.compiler.Entity.Result;
 
 @Service
@@ -22,7 +24,7 @@ public class CompileRequest {
 	EntryPointRequest entryPointRequest;
 	
 	public ResponseEntity<Object> compile(MultipartFile codeFile, MultipartFile outpFile, 
-			MultipartFile inputFile, int timeLimit, int storageLimit, String language){
+			MultipartFile inputFile, int timeLimit, int storageLimit, String language) throws IOException{
 		String folder = "";
 		String file = "";
 		
@@ -59,9 +61,24 @@ public class CompileRequest {
 		
 		Result result = execProgram(folder, image, outpFile);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(""));
+		String statuscode = result.getStatus();
+		
+		removeFiles(folder, file);
+		removeFiles(folder, outpFile.getOriginalFilename());
+		removeFiles(folder, inputFile.getOriginalFilename());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput(), result.getRequiredoutput(), statuscode, ldt));
 	}
 	
+	private boolean removeFiles(String folder, String file) {
+		if(folder != null && file != null) {
+			String filename = folder+"/"+file;
+			new File(filename).delete();
+			return true;
+		}
+		return false;
+	}
+
 	private Result execProgram(String folder, String image, MultipartFile outpFile) {
 		
 		return null;
