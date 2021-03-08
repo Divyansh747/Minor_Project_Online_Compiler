@@ -1,12 +1,19 @@
 package com.divyansh.online.compiler.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.divyansh.online.compiler.Entity.Result;
 
 @Service
 public class CompileRequest {
@@ -40,9 +47,29 @@ public class CompileRequest {
 			entryPointRequest.entrypointPythonFile(codeFile.getOriginalFilename(), inputFile, timeLimit, storageLimit);
 		}
 		
+		UploadFiles(codeFile, folder+"/"+file);
+		UploadFiles(outpFile, folder+"/"+outpFile.getOriginalFilename());
+		
+		if(inputFile != null) {
+			UploadFiles(inputFile, folder+"/"+inputFile.getOriginalFilename());
+		}
 		
 		LocalDateTime ldt = LocalDateTime.now();
+		String image = "container"+ new Date().getTime();
+		
+		Result result = execProgram(folder, image, outpFile);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(""));
+	}
+	
+	private Result execProgram(String folder, String image, MultipartFile outpFile) {
+		
+		return null;
+	}
+
+	private void UploadFiles(MultipartFile file, String filename) throws IOException {
+		byte[] data = file.getBytes();
+		Path loc = Paths.get(filename);
+		Files.write(loc, data);
 	}
 }
