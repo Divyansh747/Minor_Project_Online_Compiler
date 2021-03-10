@@ -1,7 +1,9 @@
 package com.divyansh.online.compiler.Service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +26,7 @@ public class CompileRequest {
 	EntryPointRequest entryPointRequest;
 	
 	public ResponseEntity<Object> compile(MultipartFile codeFile, MultipartFile outpFile, 
-			MultipartFile inputFile, int timeLimit, int storageLimit, String language) throws IOException{
+			MultipartFile inputFile, int timeLimit, int storageLimit, String language) throws IOException, InterruptedException{
 		String folder = "";
 		String file = "";
 		
@@ -92,7 +94,66 @@ public class CompileRequest {
 		Process processr = processrun.start();
 		status = processr.waitFor();
 		
-		return null;
+		BufferedReader outputFileReader = new BufferedReader(new InputStreamReader(outpFile.getInputStream()));
+		StringBuilder outputBuilder = new StringBuilder();
+		BufferedReader processReader = new BufferedReader(new InputStreamReader(processr.getInputStream()));
+		StringBuilder builder = new StringBuilder();
+		
+		boolean result = verifyResult(outputFileReader, outputBuilder, processReader, builder); 
+		String statusResponse;
+		
+		if(result == true && status == 0) {
+			statusResponse = "Accepted";
+		}
+		else {
+			statusResponse = "Not Accepted";
+		}
+		
+		return new Result(statusResponse, builder.toString(), outputBuilder.toString());
+	}
+
+	private boolean verifyResult(BufferedReader outputFileReader, StringBuilder outputBuilder,
+			BufferedReader processReader, StringBuilder builder) throws IOException {
+		
+		String line = null;
+		String outputLine = null;
+		boolean ans = true;
+		
+		while(((line=processReader.readLine()) != null ) && (outputLine=outputFileReader.readLine()) != null) {
+			if(!line.equals(outputLine)) {
+				ans = false;
+			}
+			builder.append(line);
+			builder.append(System.getProperty("line.separator"));
+			
+			outputBuilder.append(outputLine);
+			outputBuilder.append(System.getProperty("line.separator"));
+			
+		}
+		
+		if(line != null) {
+			builder.append(line);
+			builder.append(System.getProperty("line.separator"));
+		}
+		
+		if(outputLine != null) {
+			outputBuilder.append(outputLine);
+			outputBuilder.append(System.getProperty("line.separator"));
+		}
+		
+		while((line=processReader.readLine())!= null) {
+			ans = false;
+			builder.append(line);
+			builder.append(System.getProperty("line.separator"));
+		}
+		
+		while((outputLine=outputFileReader.readLine())!= null) {
+			ans = false;
+			outputBuilder.append(outputLine);
+			outputBuilder.append(System.getProperty("line.separator"));
+		}
+		
+		return ans;
 	}
 
 	private void UploadFiles(MultipartFile file, String filename) throws IOException {
