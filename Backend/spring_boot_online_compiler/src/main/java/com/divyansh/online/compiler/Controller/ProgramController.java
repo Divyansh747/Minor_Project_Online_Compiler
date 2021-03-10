@@ -1,5 +1,7 @@
 package com.divyansh.online.compiler.Controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ public class ProgramController {
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit){
+			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
 		if(!(timeLimit > 0  && timeLimit < 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
@@ -41,7 +43,7 @@ public class ProgramController {
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit){
+			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
 		if(!(timeLimit > 0  && timeLimit < 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
@@ -58,7 +60,7 @@ public class ProgramController {
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit){
+			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
 		if(!(timeLimit > 0  && timeLimit < 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
@@ -75,7 +77,7 @@ public class ProgramController {
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit){
+			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
 		if(!(timeLimit > 0  && timeLimit < 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
