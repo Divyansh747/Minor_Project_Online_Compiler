@@ -54,6 +54,7 @@ public class CompileRequest {
 		UploadFiles(codeFile, folder+"/"+file);
 		UploadFiles(outpFile, folder+"/"+outpFile.getOriginalFilename());
 		
+		
 		if(inputFile != null) {
 			UploadFiles(inputFile, folder+"/"+inputFile.getOriginalFilename());
 		}
@@ -62,12 +63,14 @@ public class CompileRequest {
 		String image = "container"+ new Date().getTime();
 		
 		Result result = execProgram(folder, image, outpFile);
-		
 		String statuscode = result.getStatus();
 		
 		removeFiles(folder, file);
 		removeFiles(folder, outpFile.getOriginalFilename());
-		removeFiles(folder, inputFile.getOriginalFilename());
+		
+		if(inputFile != null) {
+			removeFiles(folder, inputFile.getOriginalFilename());
+		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput(), result.getRequiredoutput(), statuscode, ldt));
 	}
@@ -84,12 +87,12 @@ public class CompileRequest {
 	private Result execProgram(String folder, String image, MultipartFile outpFile) throws IOException, InterruptedException {
 		
 		int status;
-		String[] docker = new String[] {"docker image build", folder, "-t", image};
+		String[] docker = new String[] {"sudo","docker", "image", "build", folder, "-t", image};
 		ProcessBuilder processbuild = new ProcessBuilder(docker);
 		Process process = processbuild.start();
 		status = process.waitFor();
 		
-		String[] dockerRun = new String[] { "docker run --rm", image };
+		String[] dockerRun = new String[] { "docker", "run", "--rm", image };
 		ProcessBuilder processrun = new ProcessBuilder(dockerRun);
 		Process processr = processrun.start();
 		status = processr.waitFor();

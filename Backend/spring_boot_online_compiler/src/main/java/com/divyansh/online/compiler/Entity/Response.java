@@ -2,9 +2,6 @@ package com.divyansh.online.compiler.Entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Response {
 	private String output;
 	private String requiredoutput;

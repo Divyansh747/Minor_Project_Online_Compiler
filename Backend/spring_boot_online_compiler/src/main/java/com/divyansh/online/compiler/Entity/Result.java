@@ -1,8 +1,5 @@
 package com.divyansh.online.compiler.Entity;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Result {
 	
 	private String status;

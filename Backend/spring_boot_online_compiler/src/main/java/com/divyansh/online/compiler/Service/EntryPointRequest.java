@@ -17,13 +17,13 @@ public class EntryPointRequest {
 		String entryfile;
 		
 		if(inputFile == null) {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "./output" + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "\n";
 		}else {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "./output" + "<" + inputFile.getOriginalFilename() + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "<" + inputFile.getOriginalFilename() + "\n";
 		}
 		
 		entryfile = "#!/bin/bash" + "\n" +
-					"mv main.c" + originalFilename + "\n" +
+					"mv " + originalFilename + " main.c" + "\n" +
 					"gcc main.c -o output" + "\n" + 
 					"if [ $? -ne 0 ]" + "\n" +
 					"  then" + "\n" +  

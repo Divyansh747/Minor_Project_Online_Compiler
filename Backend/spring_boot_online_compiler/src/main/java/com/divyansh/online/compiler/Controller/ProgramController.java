@@ -21,18 +21,16 @@ public class ProgramController {
 	@PostMapping("/language/c")
 	public ResponseEntity<?> programC(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
-			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit < 10)) {
+		if(!(timeLimit > 0  && timeLimit <= 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
 		}
-		if(!(storageLimit > 0  && storageLimit < 1000)) {
+		if(!(storageLimit > 0  && storageLimit <= 1000)) {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
-		
-		//createCEntryPointFile
 		
 		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "c");
 	}
@@ -41,14 +39,14 @@ public class ProgramController {
 	@PostMapping("/language/cpp")
 	public ResponseEntity<?> programCpp(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
-			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit < 10)) {
+		if(!(timeLimit > 0  && timeLimit <= 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
 		}
-		if(!(storageLimit > 0  && storageLimit < 1000)) {
+		if(!(storageLimit > 0  && storageLimit <= 1000)) {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
@@ -58,14 +56,14 @@ public class ProgramController {
 	@PostMapping("/language/java")
 	public ResponseEntity<?> programJava(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
-			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit < 10)) {
+		if(!(timeLimit > 0  && timeLimit <= 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
 		}
-		if(!(storageLimit > 0  && storageLimit < 1000)) {
+		if(!(storageLimit > 0  && storageLimit <= 1000)) {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
@@ -75,14 +73,14 @@ public class ProgramController {
 	@PostMapping("/language/python")
 	public ResponseEntity<?> programPython(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
-			@RequestPart(value = "inputFile", required = false) MultipartFile inputFile,
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit < 10)) {
+		if(!(timeLimit > 0  && timeLimit <= 10)) {
 			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
 		}
-		if(!(storageLimit > 0  && storageLimit < 1000)) {
+		if(!(storageLimit > 0  && storageLimit <= 1000)) {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
