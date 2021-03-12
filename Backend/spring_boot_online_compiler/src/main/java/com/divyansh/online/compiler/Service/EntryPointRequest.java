@@ -19,7 +19,7 @@ public class EntryPointRequest {
 		if(inputFile == null) {
 			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "\n";
 		}else {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "<" + inputFile.getOriginalFilename() + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "< " + inputFile.getOriginalFilename() + "\n";
 		}
 		
 		entryfile = "#!/bin/bash" + "\n" +
@@ -55,13 +55,13 @@ public class EntryPointRequest {
 		String entryfile;
 		
 		if(inputFile == null) {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "./output" + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "\n";
 		}else {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "./output" + "<" + inputFile.getOriginalFilename() + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "< " + inputFile.getOriginalFilename() + "\n";
 		}
 		
 		entryfile = "#!/bin/bash" + "\n" + 
-					"mv " + originalFilename + "main.cpp" + "\n" +
+					"mv " + originalFilename + " main.cpp" + "\n" +
 					"g++ main.cpp -o output" + "\n" +
 					"if [ $? -ne 0 ]" + "\n" +
 					"  then" + "\n" +  
@@ -92,14 +92,14 @@ public class EntryPointRequest {
 		String entryfile;
 		
 		if(inputFile == null) {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "java main" + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " java main" + "\n";
 		}else {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "java main" + "<" + inputFile.getOriginalFilename() + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " java main " + "< " + inputFile.getOriginalFilename() + "\n";
 		}
 		
 		entryfile = "#!/bin/bash" + "\n" + 
-					"mv " + originalFilename + "main.java" + "\n" +
-					"javac main.java" + "\n" +
+					"mv " + originalFilename + " main.java" + "\n" +
+					"javac main.java " + "\n" +
 					"if [ $? -ne 0 ]" + "\n" +
 					"  then" + "\n" +  
 					"    exit 2" + "\n" +
@@ -129,23 +129,19 @@ public class EntryPointRequest {
 		String entryfile;
 		
 		if(inputFile == null) {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "python main.py" + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " python main.py " + "\n";
 		}else {
-			cmd = "timeout --signal=SIGTERM " + timeLimit + "python main.py" + "<" + inputFile.getOriginalFilename() + "\n";
+			cmd = "timeout --signal=SIGTERM " + timeLimit + " python main.py " + "< " + inputFile.getOriginalFilename() + "\n";
 		}
 		
 		entryfile = "#!/bin/bash" + "\n" + 
-					"mv " + originalFilename + "main.py" + "\n" +
-					"if [ $? -ne 0 ]" + "\n" +
-					"  then" + "\n" +  
-					"    exit 2" + "\n" +
-					"fi" + "\n" +
+					"mv " + originalFilename + " main.py " + "\n" +
 					"ulimit -s " + storageLimit + "\n" +
 					cmd + "\n" + "exit $?";
 		
 		OutputStream os = null;
 		try {
-			os = new FileOutputStream(new File("program_java/compilecode.sh"));
+			os = new FileOutputStream(new File("program_python/compilecode.sh"));
 			os.write(entryfile.getBytes(), 0, entryfile.length());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
