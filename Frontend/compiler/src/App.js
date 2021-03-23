@@ -5,6 +5,7 @@ import { Container, Row, Col } from "reactstrap";
 import Home from "./Components/Home"
 import Header from './Components/Header';
 import Ide from './Components/Ide'
+import Compiler from './Components/Compiler'
 
 function App() {
   return (
@@ -13,12 +14,13 @@ function App() {
         <Container>
           <Header />
           <Row>
-            <Col md={4}>
+            <Col md={3}>
               <Menus />
             </Col>
-            <Col md={8}>
+            <Col md={9}>
             <Route path="/" component={Home} exact />
             <Route path="/ide" component={Ide} exact />
+            <Route path="/compiler" component={Compiler} exact />
             </Col>
           </Row>
         </Container>
