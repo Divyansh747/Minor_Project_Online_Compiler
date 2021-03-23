@@ -72,6 +72,12 @@ public class CompileRequest {
 			removeFiles(folder, inputFile.getOriginalFilename());
 		}
 		
+		int status;
+		String[] docker = new String[] {"sudo","docker", "rmi", image};
+		ProcessBuilder processbuild = new ProcessBuilder(docker);
+		Process process = processbuild.start();
+		status = process.waitFor();
+		
 		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput(), result.getRequiredoutput(), statuscode, ldt));
 	}
 	
