@@ -6,7 +6,7 @@ const Menus = () => {
         <ListGroup>
             <Link className="list-group-item list-group-item-action" to="/">Home</Link> 
             <Link className="list-group-item list-group-item-action" to="/Ide">IDE</Link> 
-            <Link className="list-group-item list-group-item-action" to="#">Compiler</Link> 
+            <Link className="list-group-item list-group-item-action" to="/compiler">Compiler</Link> 
             <Link className="list-group-item list-group-item-action" to="#">Contact</Link>
             <Link className="list-group-item list-group-item-action" to="#">About US</Link>
         </ListGroup>
