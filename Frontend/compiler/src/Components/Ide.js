@@ -1,5 +1,5 @@
-import react, { useEffect, useState } from 'react';
-import { Form, FormGroup, Input, Container, Button } from "reactstrap";
+import  { useEffect } from 'react';
+import { FormGroup, Input, Button, Jumbotron } from "reactstrap";
 
 var downloadCodeFile = () => {
     const element = document.createElement("a");
@@ -45,7 +45,9 @@ const Ide = () => {
 
     return(
         <div>
+            <Jumbotron>
             <h1 className="text-center">Online IDE</h1>
+            </Jumbotron>
             <FormGroup>
                 <label>Select Programming Language</label>
                 <br/>
