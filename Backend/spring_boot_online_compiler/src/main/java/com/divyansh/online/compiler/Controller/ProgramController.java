@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -18,6 +19,7 @@ public class ProgramController {
 	@Autowired
 	private CompileRequest compileRequest;
 
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/c")
 	public ResponseEntity<?> programC(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
@@ -35,7 +37,7 @@ public class ProgramController {
 		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "c");
 	}
 
-	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/cpp")
 	public ResponseEntity<?> programCpp(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
@@ -53,6 +55,7 @@ public class ProgramController {
 		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "cpp");
 	}
 	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/java")
 	public ResponseEntity<?> programJava(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
@@ -70,6 +73,7 @@ public class ProgramController {
 		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "java");
 	}
 	
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/python")
 	public ResponseEntity<?> programPython(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
 			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
