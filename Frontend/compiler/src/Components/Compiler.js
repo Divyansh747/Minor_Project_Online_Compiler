@@ -10,7 +10,6 @@ class Compiler extends React.Component {
         super(props)
         this.state = {
             codeFile: null,
-            outputFile: null,
             inputFile: null,
             timeLimit: 8,
             storageLimit: 80,
@@ -21,7 +20,6 @@ class Compiler extends React.Component {
         this.handleForm = this.handleForm.bind(this)
         this.onChangeFirst = this.onChangeFirst.bind(this)
         this.onChangeSecond = this.onChangeSecond.bind(this)
-        this.onChangeThird = this.onChangeThird.bind(this)
         
         this.postDataToServer = this.postDataToServer.bind(this)
     }
@@ -37,14 +35,7 @@ class Compiler extends React.Component {
         })
     }
 
-
     onChangeSecond(e) {
-        this.setState({
-            outputFile: e.target.files[0],
-        })
-    }
-
-    onChangeThird(e) {
         this.setState({
             inputFile: e.target.files[0],
         })
@@ -55,7 +46,6 @@ class Compiler extends React.Component {
         e.preventDefault()
         this.postDataToServer(
             this.state.codeFile, 
-            this.state.outputFile, 
             this.state.inputFile, 
             this.state.timeLimit, 
             this.state.storageLimit
@@ -65,11 +55,10 @@ class Compiler extends React.Component {
         
     }
 
-    postDataToServer(codeFile, outputFile, inputFile, timeLimit, storageLimit) {
+    postDataToServer(codeFile, inputFile, timeLimit, storageLimit) {
         const language = document.getElementById("language").value
         const formData = new FormData()
         formData.append('codeFile',codeFile)
-        formData.append('outputFile', outputFile)
         formData.append('inputFile', inputFile)
         formData.append('timeLimit', timeLimit)
         formData.append('storageLimit', storageLimit)
@@ -81,7 +70,6 @@ class Compiler extends React.Component {
                 console.log("compiler api called")
                 this.setState({
                     output: response.data.output,
-                    requiredOutput: response.data.requiredoutput,
                     statusCode: response.data.statuscode
                 })
             },(error) => {
@@ -89,7 +77,6 @@ class Compiler extends React.Component {
                 console.log("error")
             }
         )
-        //return post(`${api}/${language}`, formData, config)
     }
 
 render() {
@@ -115,14 +102,10 @@ render() {
                 <Input type="file" onChange={this.onChangeFirst}></Input>
             </FormGroup>
 
-            <FormGroup>
-                <label>Upload Expected Output File</label>
-                <Input type="file" onChange={this.onChangeSecond}></Input>
-            </FormGroup>
-    
+       
             <FormGroup>
                 <label>Upload Input File</label>
-                <Input type="file" onChange={this.onChangeThird}></Input>
+                <Input type="file" onChange={this.onChangeSecond}></Input>
             </FormGroup>
 
             <Container className="text-center">
@@ -135,12 +118,6 @@ render() {
                 <h3>Output:</h3>
                 { 
                     <p>{this.state.output}</p> 
-                
-                }
-                <br/>
-                <h3>Required Output:</h3>
-                { 
-                    <p>{this.state.requiredOutput}</p> 
                 
                 }
                 <br/>

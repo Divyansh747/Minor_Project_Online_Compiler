@@ -25,23 +25,10 @@ var downloadCodeFile = () => {
     element.click();
   }
 
-  var downloadOutputFile = () => {
-    const element = document.createElement("a");
-    const filename = document.getElementById("filename")   
-    const file = new Blob([document.getElementById('inputOutput').value],    
-                {type: 'text/plain;charset=utf-8'});
-    element.href = URL.createObjectURL(file);
-    element.download = filename.value + "Output.txt";
-    document.body.appendChild(element);
-    element.click();
-  }
-
 const Ide = () => {
     useEffect(() => {
         document.title = "IDE"
     }, [])
-
-    
 
     return(
         <div>
@@ -77,14 +64,6 @@ const Ide = () => {
                 <Input type="textarea" style={{ height: 150 }} id="inputInput" />
             </FormGroup>
             <Button onClick={downloadInputFile} color="primary">Download</Button>
-            <br />
-            <br />
-            
-            <FormGroup>
-                <label>Expected Output</label>
-                <Input type="textarea" style={{ height: 150 }} id="inputOutput" />
-            </FormGroup>
-            <Button onClick={downloadOutputFile} color="primary">Download</Button>
             <br />
             <br />
             
