@@ -4,14 +4,12 @@ import java.time.LocalDateTime;
 
 public class Response {
 	private String output;
-	private String requiredoutput;
 	private String statuscode;
 	private LocalDateTime ldt;
 	
-	public Response(String output, String requiredoutput, String statuscode, LocalDateTime ldt) {
+	public Response(String output, String statuscode, LocalDateTime ldt) {
 		super();
 		this.output = output;
-		this.requiredoutput = requiredoutput;
 		this.statuscode = statuscode;
 		this.ldt = ldt;
 	}
@@ -22,14 +20,6 @@ public class Response {
 
 	public void setOutput(String output) {
 		this.output = output;
-	}
-
-	public String getRequiredoutput() {
-		return requiredoutput;
-	}
-
-	public void setRequiredoutput(String requiredoutput) {
-		this.requiredoutput = requiredoutput;
 	}
 
 	public String getStatuscode() {

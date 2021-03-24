@@ -22,7 +22,6 @@ public class ProgramController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/c")
 	public ResponseEntity<?> programC(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
@@ -34,13 +33,12 @@ public class ProgramController {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
-		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "c");
+		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "c");
 	}
 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/cpp")
 	public ResponseEntity<?> programCpp(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
@@ -52,13 +50,12 @@ public class ProgramController {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
-		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "cpp");
+		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "cpp");
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/java")
 	public ResponseEntity<?> programJava(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
@@ -70,13 +67,12 @@ public class ProgramController {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
-		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "java");
+		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "java");
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/python")
 	public ResponseEntity<?> programPython(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestPart(value = "outputFile", required = true) MultipartFile outputFile,
 			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
 			@RequestParam(value = "timeLimit", required = true) int timeLimit,
 			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
@@ -88,6 +84,6 @@ public class ProgramController {
 			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
 		}
 		
-		return compileRequest.compile(codeFile, outputFile, inputFile, timeLimit, storageLimit, "python");
+		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "python");
 	}
 }

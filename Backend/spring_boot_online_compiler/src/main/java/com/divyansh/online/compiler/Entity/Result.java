@@ -4,13 +4,11 @@ public class Result {
 	
 	private String status;
 	private String output;
-	private String requiredoutput;
 	
-	public Result(String status, String output, String requiredoutput) {
+	public Result(String status, String output) {
 		super();
 		this.status = status;
 		this.output = output;
-		this.requiredoutput = requiredoutput;
 	}
 
 	public String getStatus() {
@@ -28,13 +26,4 @@ public class Result {
 	public void setOutput(String output) {
 		this.output = output;
 	}
-
-	public String getRequiredoutput() {
-		return requiredoutput;
-	}
-
-	public void setRequiredoutput(String requiredoutput) {
-		this.requiredoutput = requiredoutput;
-	}
-	
 }

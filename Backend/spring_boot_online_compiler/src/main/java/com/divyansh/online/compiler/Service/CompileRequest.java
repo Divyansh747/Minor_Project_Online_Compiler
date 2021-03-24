@@ -25,7 +25,7 @@ public class CompileRequest {
 	@Autowired
 	EntryPointRequest entryPointRequest;
 	
-	public ResponseEntity<Object> compile(MultipartFile codeFile, MultipartFile outpFile, 
+	public ResponseEntity<Object> compile(MultipartFile codeFile, 
 			MultipartFile inputFile, int timeLimit, int storageLimit, String language) throws IOException, InterruptedException{
 		String folder = "";
 		String file = "";
@@ -52,8 +52,6 @@ public class CompileRequest {
 		}
 		
 		UploadFiles(codeFile, folder+"/"+file);
-		UploadFiles(outpFile, folder+"/"+outpFile.getOriginalFilename());
-		
 		
 		if(inputFile != null) {
 			UploadFiles(inputFile, folder+"/"+inputFile.getOriginalFilename());
@@ -62,11 +60,10 @@ public class CompileRequest {
 		LocalDateTime ldt = LocalDateTime.now();
 		String image = "container"+ new Date().getTime();
 		
-		Result result = execProgram(folder, image, outpFile);
+		Result result = execProgram(folder, image);
 		String statuscode = result.getStatus();
 		
 		removeFiles(folder, file);
-		removeFiles(folder, outpFile.getOriginalFilename());
 		
 		if(inputFile != null) {
 			removeFiles(folder, inputFile.getOriginalFilename());
@@ -78,7 +75,7 @@ public class CompileRequest {
 		Process process = processbuild.start();
 		status = process.waitFor();
 		
-		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput(), result.getRequiredoutput(), statuscode, ldt));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput()/*,result.getRequiredoutput()*/, statuscode, ldt));
 	}
 	
 	private boolean removeFiles(String folder, String file) {
@@ -90,7 +87,7 @@ public class CompileRequest {
 		return false;
 	}
 
-	private Result execProgram(String folder, String image, MultipartFile outpFile) throws IOException, InterruptedException {
+	private Result execProgram(String folder, String image) throws IOException, InterruptedException {
 		
 		int status;
 		String[] docker = new String[] {"sudo","docker", "image", "build", folder, "-t", image};
@@ -103,66 +100,25 @@ public class CompileRequest {
 		Process processr = processrun.start();
 		status = processr.waitFor();
 		
-		BufferedReader outputFileReader = new BufferedReader(new InputStreamReader(outpFile.getInputStream()));
-		StringBuilder outputBuilder = new StringBuilder();
 		BufferedReader processReader = new BufferedReader(new InputStreamReader(processr.getInputStream()));
 		StringBuilder builder = new StringBuilder();
 		
-		boolean result = verifyResult(outputFileReader, outputBuilder, processReader, builder); 
 		String statusResponse;
+		String line = null;
+
+		while((line=processReader.readLine())!= null) {
+			builder.append(line);
+			builder.append(System.getProperty("line.separator"));
+		}
 		
-		if(result == true && status == 0) {
-			statusResponse = "Accepted";
+		if(status == 0) {
+			statusResponse = "Program Executed Successfully";
 		}
 		else {
-			statusResponse = "Not Accepted";
+			statusResponse = "Error during Program Compilation!";
 		}
 		
-		return new Result(statusResponse, builder.toString(), outputBuilder.toString());
-	}
-
-	private boolean verifyResult(BufferedReader outputFileReader, StringBuilder outputBuilder,
-			BufferedReader processReader, StringBuilder builder) throws IOException {
-		
-		String line = null;
-		String outputLine = null;
-		boolean ans = true;
-		
-		while(((line=processReader.readLine()) != null ) && (outputLine=outputFileReader.readLine()) != null) {
-			if(!line.equals(outputLine)) {
-				ans = false;
-			}
-			builder.append(line);
-			builder.append(System.getProperty("line.separator"));
-			
-			outputBuilder.append(outputLine);
-			outputBuilder.append(System.getProperty("line.separator"));
-			
-		}
-		
-		if(line != null) {
-			builder.append(line);
-			builder.append(System.getProperty("line.separator"));
-		}
-		
-		if(outputLine != null) {
-			outputBuilder.append(outputLine);
-			outputBuilder.append(System.getProperty("line.separator"));
-		}
-		
-		while((line=processReader.readLine())!= null) {
-			ans = false;
-			builder.append(line);
-			builder.append(System.getProperty("line.separator"));
-		}
-		
-		while((outputLine=outputFileReader.readLine())!= null) {
-			ans = false;
-			outputBuilder.append(outputLine);
-			outputBuilder.append(System.getProperty("line.separator"));
-		}
-		
-		return ans;
+		return new Result(statusResponse, builder.toString());
 	}
 
 	private void UploadFiles(MultipartFile file, String filename) throws IOException {
