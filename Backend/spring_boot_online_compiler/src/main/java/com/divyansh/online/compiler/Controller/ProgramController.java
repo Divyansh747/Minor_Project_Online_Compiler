@@ -22,68 +22,32 @@ public class ProgramController {
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/c")
 	public ResponseEntity<?> programC(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
-			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit <= 10)) {
-			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
-		}
-		if(!(storageLimit > 0  && storageLimit <= 1000)) {
-			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
-		}
-		
-		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "c");
+		return compileRequest.compile(codeFile, inputFile, "c");
 	}
 
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/cpp")
 	public ResponseEntity<?> programCpp(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
-			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit <= 10)) {
-			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
-		}
-		if(!(storageLimit > 0  && storageLimit <= 1000)) {
-			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
-		}
-		
-		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "cpp");
+		return compileRequest.compile(codeFile, inputFile, "cpp");
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/java")
 	public ResponseEntity<?> programJava(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
-			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit <= 10)) {
-			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
-		}
-		if(!(storageLimit > 0  && storageLimit <= 1000)) {
-			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
-		}
-		
-		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "java");
+		return compileRequest.compile(codeFile, inputFile, "java");
 	}
 	
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@PostMapping("/language/python")
 	public ResponseEntity<?> programPython(@RequestPart(value = "codeFile", required = true) MultipartFile codeFile,
-			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile,
-			@RequestParam(value = "timeLimit", required = true) int timeLimit,
-			@RequestParam(value = "storageLimit", required = true) int storageLimit) throws IOException, InterruptedException{
+			@RequestParam(value = "inputFile", required = false) MultipartFile inputFile) throws IOException, InterruptedException{
 		
-		if(!(timeLimit > 0  && timeLimit <= 10)) {
-			return ResponseEntity.badRequest().body("Time limit must be 0-10 sec!");
-		}
-		if(!(storageLimit > 0  && storageLimit <= 1000)) {
-			return ResponseEntity.badRequest().body("Storage limit must be 0-10 sec!");
-		}
-		
-		return compileRequest.compile(codeFile, inputFile, timeLimit, storageLimit, "python");
+		return compileRequest.compile(codeFile, inputFile, "python");
 	}
 }

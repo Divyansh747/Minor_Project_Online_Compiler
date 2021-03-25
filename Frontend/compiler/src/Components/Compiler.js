@@ -11,8 +11,6 @@ class Compiler extends React.Component {
         this.state = {
             codeFile: null,
             inputFile: null,
-            timeLimit: 8,
-            storageLimit: 80,
             output: [],
             requiredOutput: [],
             statusCode: []
@@ -46,9 +44,7 @@ class Compiler extends React.Component {
         e.preventDefault()
         this.postDataToServer(
             this.state.codeFile, 
-            this.state.inputFile, 
-            this.state.timeLimit, 
-            this.state.storageLimit
+            this.state.inputFile
             ).then((response) => {
                 console.log(response)
             } )
@@ -60,8 +56,6 @@ class Compiler extends React.Component {
         const formData = new FormData()
         formData.append('codeFile',codeFile)
         formData.append('inputFile', inputFile)
-        formData.append('timeLimit', timeLimit)
-        formData.append('storageLimit', storageLimit)
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
         return axios.post(`${api}/${language}`, formData, config).then(

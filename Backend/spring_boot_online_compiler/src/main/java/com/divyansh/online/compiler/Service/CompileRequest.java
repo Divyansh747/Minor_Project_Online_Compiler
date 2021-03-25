@@ -26,29 +26,29 @@ public class CompileRequest {
 	EntryPointRequest entryPointRequest;
 	
 	public ResponseEntity<Object> compile(MultipartFile codeFile, 
-			MultipartFile inputFile, int timeLimit, int storageLimit, String language) throws IOException, InterruptedException{
+			MultipartFile inputFile, String language) throws IOException, InterruptedException{
 		String folder = "";
 		String file = "";
 		
 		if(language == "c") {
 			folder = "program_c";
 			file = "main.c";
-			entryPointRequest.entrypointCFile(codeFile.getOriginalFilename(), inputFile, timeLimit, storageLimit);
+			entryPointRequest.entrypointCFile(codeFile.getOriginalFilename(), inputFile);
 		}
 		else if(language == "cpp") {
 			folder = "program_cpp";
 			file = "main.cpp";
-			entryPointRequest.entrypointCppFile(codeFile.getOriginalFilename(), inputFile, timeLimit, storageLimit);
+			entryPointRequest.entrypointCppFile(codeFile.getOriginalFilename(), inputFile);
 		}
 		else if(language == "java") {
 			folder = "program_java";
 			file = "main.java";
-			entryPointRequest.entrypointJavaFile(codeFile.getOriginalFilename(), inputFile, timeLimit, storageLimit);			
+			entryPointRequest.entrypointJavaFile(codeFile.getOriginalFilename(), inputFile);			
 		}
 		else if(language == "python") {
 			folder = "program_python";
 			file = "main.py";
-			entryPointRequest.entrypointPythonFile(codeFile.getOriginalFilename(), inputFile, timeLimit, storageLimit);
+			entryPointRequest.entrypointPythonFile(codeFile.getOriginalFilename(), inputFile);
 		}
 		
 		UploadFiles(codeFile, folder+"/"+file);
@@ -76,15 +76,6 @@ public class CompileRequest {
 		status = process.waitFor();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput()/*,result.getRequiredoutput()*/, statuscode, ldt));
-	}
-	
-	private boolean removeFiles(String folder, String file) {
-		if(folder != null && file != null) {
-			String filename = folder+"/"+file;
-			new File(filename).delete();
-			return true;
-		}
-		return false;
 	}
 
 	private Result execProgram(String folder, String image) throws IOException, InterruptedException {
@@ -126,4 +117,15 @@ public class CompileRequest {
 		Path loc = Paths.get(filename);
 		Files.write(loc, data);
 	}
+	
+	
+	private boolean removeFiles(String folder, String file) {
+		if(folder != null && file != null) {
+			String filename = folder+"/"+file;
+			new File(filename).delete();
+			return true;
+		}
+		return false;
+	}
+
 }

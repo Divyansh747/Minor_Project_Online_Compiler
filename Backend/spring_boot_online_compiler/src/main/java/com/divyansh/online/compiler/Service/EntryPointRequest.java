@@ -12,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class EntryPointRequest {
 
-	public void entrypointCFile(String originalFilename, MultipartFile inputFile, int timeLimit, int storageLimit) {
+	public void entrypointCFile(String originalFilename, MultipartFile inputFile) {
 		String cmd;
 		String entryfile;
+		int timeLimit = 10; 
+		int storageLimit = 100;
 		
 		if(inputFile == null) {
 			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "\n";
@@ -50,9 +52,12 @@ public class EntryPointRequest {
 		
 	}
 
-	public void entrypointCppFile(String originalFilename, MultipartFile inputFile, int timeLimit, int storageLimit) {
+	public void entrypointCppFile(String originalFilename, MultipartFile inputFile) {
 		String cmd;
 		String entryfile;
+		int timeLimit = 10; 
+		int storageLimit = 100;
+		
 		
 		if(inputFile == null) {
 			cmd = "timeout --signal=SIGTERM " + timeLimit + " ./output" + "\n";
@@ -87,9 +92,11 @@ public class EntryPointRequest {
 		}
 	}
 
-	public void entrypointJavaFile(String originalFilename, MultipartFile inputFile, int timeLimit, int storageLimit) {
+	public void entrypointJavaFile(String originalFilename, MultipartFile inputFile) {
 		String cmd;
 		String entryfile;
+		int timeLimit = 10; 
+		int storageLimit = 100;
 		
 		if(inputFile == null) {
 			cmd = "timeout --signal=SIGTERM " + timeLimit + " java main" + "\n";
@@ -124,9 +131,12 @@ public class EntryPointRequest {
 		}
 	}
 
-	public void entrypointPythonFile(String originalFilename, MultipartFile inputFile, int timeLimit, int storageLimit) {
+	public void entrypointPythonFile(String originalFilename, MultipartFile inputFile) {
 		String cmd;
 		String entryfile;
+		int timeLimit = 10; 
+		int storageLimit = 100;
+		
 		
 		if(inputFile == null) {
 			cmd = "timeout --signal=SIGTERM " + timeLimit + " python main.py " + "\n";
