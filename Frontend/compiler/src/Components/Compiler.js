@@ -51,7 +51,7 @@ class Compiler extends React.Component {
         
     }
 
-    postDataToServer(codeFile, inputFile, timeLimit, storageLimit) {
+    postDataToServer(codeFile, inputFile) {
         const language = document.getElementById("language").value
         const formData = new FormData()
         formData.append('codeFile',codeFile)
