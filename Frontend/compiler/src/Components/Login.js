@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import AuthenticationService from '../Service/AuthenticationService';
 import { Button, Input, Jumbotron} from 'reactstrap'
- 
+import { Link } from 'react-router-dom';
+
 class Login extends Component {
 
     constructor(props) {
@@ -47,7 +48,7 @@ class Login extends Component {
                     <hr className="my-2" />
                     <p className="lead text-center">
                     <br />
-                    <Button color="primary">Register Here</Button>
+                    <Link className="btn btn-primary" to="/signup">Register Here</Link>
                     </p>
                 </Jumbotron>
                 <div className="container">

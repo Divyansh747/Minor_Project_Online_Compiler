@@ -13,7 +13,7 @@ const Menus = () => {
             <Link className="list-group-item list-group-item-action" to="#">About US</Link>
             {!isUserLoggedIn && <Link className="list-group-item list-group-item-action" to="/login">Login</Link> }
             {isUserLoggedIn && <Link className="list-group-item list-group-item-action" to="/logout" onClick={AuthenticationService.logout}>Logout</Link> }
-            <Link className="list-group-item list-group-item-action" to="#">Singup</Link>
+            <Link className="list-group-item list-group-item-action" to="/signup">Singup</Link>
         </ListGroup>
     )
 }

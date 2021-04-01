@@ -9,6 +9,7 @@ import Compiler from './Components/Compiler'
 import Login from './Components/Login'
 import Logout from './Components/Logout'
 import AuthenticatedRoute from './AuthenticatedRoute'
+import Signup from './Components/Signup'
 
 function App() {
   return (
@@ -22,10 +23,11 @@ function App() {
             </Col>
             <Col md={9}>
             <Switch>
-            <Route path="/" component={Login} exact />
+            <Route path="/" component={Home} exact />
             <Route path="/login" component={Login} exact />
+            <Route path="/signup" component={Signup} exact />
+            <Route path="/home" component={Home} exact />
             <AuthenticatedRoute path="/logout" component={Logout} exact />
-            <AuthenticatedRoute path="/home" component={Home} exact />
             <AuthenticatedRoute path="/ide" component={Ide} exact />
             <AuthenticatedRoute path="/compiler" component={Compiler} exact />
             </Switch>

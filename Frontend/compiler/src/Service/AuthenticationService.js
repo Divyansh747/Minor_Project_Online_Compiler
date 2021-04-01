@@ -16,6 +16,16 @@ class AuthenticationService {
         )
     }
 
+    userRegistrationService(email, username, password) {
+        return axios.post(`${URL}/userRegistration`, {
+            email,
+            username,
+            password
+        }).catch(
+            console.log("SIGNUP FAILED")
+        ) 
+    }
+
     registerSuccessfulLoginForJwt(email, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, email)
         this.setupAxiosInterceptors(this.createJWTToken(token))
