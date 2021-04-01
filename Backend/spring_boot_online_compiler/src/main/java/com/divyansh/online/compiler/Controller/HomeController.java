@@ -44,19 +44,10 @@ public class HomeController {
         return jwtUtil.generateToken(authRequest.getEmail());
     }	    
 	
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping("/userlogin")
 	public String userValidation() {
 		return "User Login successfull";
-	}
-		
-	@PostMapping("/userRegistration")
-	public ResponseEntity<?> createUser(@Valid @RequestBody RegistrationEntity registrationRequest) throws Exception {
-		return ResponseEntity.ok(registrationService.createUser(registrationRequest));
-	}
-	
-	@GetMapping("/userRegistration")
-	public ResponseEntity<?> getAllUser() throws Exception {
-		return ResponseEntity.ok(registrationService.findAll());
 	}
 	
 }
