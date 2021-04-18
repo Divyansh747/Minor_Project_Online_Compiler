@@ -31,7 +31,8 @@ class Login extends Component {
          AuthenticationService
              .executeJwtAuthenticationService(this.state.email, this.state.password)
              .then((response) => {
-                 AuthenticationService.registerSuccessfulLoginForJwt(this.state.email, response.data.token)
+                 console.log("response: "+response.data)
+                 AuthenticationService.registerSuccessfulLoginForJwt(this.state.email, response.data)
                  this.props.history.push(`/home`)
              }).catch(() => {
                  this.setState({ showSuccessMessage: false })
