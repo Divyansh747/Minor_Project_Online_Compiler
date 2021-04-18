@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Input, Jumbotron} from 'reactstrap'
 import AuthenticationService from '../Service/AuthenticationService';
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
 
@@ -44,11 +45,11 @@ class Signup extends Component {
         return(
             <div>            
             <Jumbotron>
-                <h1 className="text-center">Signup</h1>
+                <h1 className="text-center">Sign Up</h1>
                 <hr className="my-2" />
                 <p className="lead text-center">
                 <br />
-                Registration Page!
+                <Link className="btn btn-primary" to="/login">Login Here</Link>
                 </p>
             </Jumbotron>
             <div className="container">

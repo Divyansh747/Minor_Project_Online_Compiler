@@ -1,5 +1,6 @@
 import  { useEffect } from 'react';
 import { FormGroup, Input, Button, Jumbotron } from "reactstrap";
+import '../App.css';
 
 var downloadCodeFile = () => {
     const element = document.createElement("a");
@@ -53,7 +54,13 @@ const Ide = () => {
             
             <FormGroup>
                 <label>Code</label>
-                <Input type="textarea" style={{ height: 250 }} id="inputCode" />
+                <Input type="textarea" 
+                    style={{ 
+                        height: 250,
+                        backgroundColor: "#066f90",
+                        color: "#FFFFFF"
+                    }} 
+                    id="inputCode" />
             </FormGroup>
             <Button onClick={downloadCodeFile} color="primary">Download</Button>
             <br />
@@ -61,7 +68,13 @@ const Ide = () => {
             
             <FormGroup>
                 <label>Input</label>
-                <Input type="textarea" style={{ height: 150 }} id="inputInput" />
+                <Input type="textarea"  
+                    style={{ 
+                        height: 150,
+                        backgroundColor: "#066f90",
+                        color: "#FFFFFF"
+                    }} 
+                    id="inputInput" />
             </FormGroup>
             <Button onClick={downloadInputFile} color="primary">Download</Button>
             <br />
