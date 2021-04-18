@@ -75,7 +75,7 @@ public class CompileRequest {
 		Process process = processbuild.start();
 		status = process.waitFor();
 		
-		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput()/*,result.getRequiredoutput()*/, statuscode, ldt));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response(result.getOutput(), statuscode, ldt));
 	}
 
 	private Result execProgram(String folder, String image) throws IOException, InterruptedException {
@@ -92,6 +92,7 @@ public class CompileRequest {
 		status = processr.waitFor();
 		
 		BufferedReader processReader = new BufferedReader(new InputStreamReader(processr.getInputStream()));
+		BufferedReader errorReader = new BufferedReader(new InputStreamReader(processr.getErrorStream()));
 		StringBuilder builder = new StringBuilder();
 		
 		String statusResponse;
@@ -107,6 +108,12 @@ public class CompileRequest {
 		}
 		else {
 			statusResponse = "Error during Program Compilation!";
+			
+			while((line=errorReader.readLine())!= null) {
+				builder.append(line);
+				builder.append(System.getProperty("line.separator"));
+			}
+			
 		}
 		
 		return new Result(statusResponse, builder.toString());
