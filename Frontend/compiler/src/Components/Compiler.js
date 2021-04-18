@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, FormGroup, Input, Container, Button} from 'reactstrap'
+import {Form, FormGroup, Input, Container, Button, Spinner} from 'reactstrap'
 import axios from 'axios'
 import api from '../api/api.js'
 import { Jumbotron } from 'reactstrap';
@@ -13,7 +13,8 @@ class Compiler extends React.Component {
             inputFile: null,
             output: [],
             requiredOutput: [],
-            statusCode: []
+            statusCode: [],
+            isLoading: false
         }
         this.handleForm = this.handleForm.bind(this)
         this.onChangeFirst = this.onChangeFirst.bind(this)
@@ -57,14 +58,19 @@ class Compiler extends React.Component {
         formData.append('codeFile',codeFile)
         formData.append('inputFile', inputFile)
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-
+        this.setState({
+            output: [],
+            statusCode: [],
+            isLoading: true 
+        })
         return axios.post(`${api}/${language}`, formData, config).then(
             (response) =>  {
                 console.log(response)
                 console.log("compiler api called")
                 this.setState({
                     output: response.data.output,
-                    statusCode: response.data.statuscode
+                    statusCode: response.data.statuscode,
+                    isLoading: false
                 })
             },(error) => {
                 console.log(error)
@@ -110,12 +116,16 @@ render() {
             <br/>
             <Jumbotron>
                 <h3>Output:</h3>
+                <p>{this.state.isLoading === true && <Spinner color={"primary"} />}</p> 
+                
                 { 
                     <p>{this.state.output}</p> 
                 
                 }
                 <br/>
                 <h3>Status Code:</h3>
+                <p>{this.state.isLoading === true && <Spinner color={"primary"} />}</p> 
+                
                 { 
                     <p>{this.state.statusCode}</p>    
                 }
