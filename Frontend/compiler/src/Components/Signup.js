@@ -12,6 +12,9 @@ class Signup extends Component {
             username: '',
             email: '',
             password: '',
+            usernameError: '',
+            emailError: '',
+            passwordError: '',
             hasLoginFailed: false,
             showSuccessMessage: false
         }
@@ -28,7 +31,39 @@ class Signup extends Component {
         )
     }
 
+    validate = () => {
+        let usernameError= "";
+        let emailError = "";
+        let passwordError = "";
+         
+        if (!this.state.username) {
+            usernameError= 'Username cannot be empty'
+        }
+        if (!this.state.email.includes('@')) {
+            emailError = 'invalid email';
+        }
+
+        if (!this.state.password) {
+            passwordError = 'Password cannot be empty';
+        }
+        if(emailError) {
+            this.setState({emailError})
+            return false;
+        }
+
+        if (emailError || usernameError || passwordError) {
+            this.setState({ emailError, usernameError, passwordError });
+            return false;
+        }
+
+        return true;
+    }
+
     signupClicked() {
+        const isValid = this.validate();
+        if (!isValid) {
+            return false;    
+        }
         AuthenticationService
         .userRegistrationService(this.state.email, this.state.username, this.state.password)
         .then(() => {
@@ -55,11 +90,31 @@ class Signup extends Component {
             <div className="container">
                 {this.state.hasLoginFailed && <div className="alert alert-danger">Email already registered!</div>}
                 {this.state.showSuccessMessage && <div className="alert alert-success">Sucessfully Registered</div>}
-                Username: <Input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
+                Username: <Input 
+                    type="text" 
+                    name="username" 
+                    value={this.state.username} 
+                    onChange={this.handleChange} 
+                />
+                <div style={{ fontSize: 12, color: "red" }}> {this.state.usernameError} </div>
                 <br />
-                Email: <Input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
+                Email: <Input 
+                    type="text" 
+                    name="email" 
+                    value={this.state.email} 
+                    onChange={this.handleChange} 
+                />
+                <div style={{ fontSize: 12, color: "red" }}> {this.state.emailError} </div>
+
                 <br />
-                Password: <Input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+                Password: <Input 
+                    type="password" 
+                    name="password" 
+                    value={this.state.password} 
+                    onChange={this.handleChange} 
+                />
+                <div style={{ fontSize: 12, color: "red" }}> {this.state.passwordError} </div>
+
                 <br />
                 <Button className="btn btn-success" onClick={this.signupClicked}>Signup</Button>
             </div>

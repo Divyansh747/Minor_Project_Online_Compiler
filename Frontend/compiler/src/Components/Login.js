@@ -11,9 +11,11 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
+            emailError: '',
+            passwordError: '',
             hasLoginFailed: false,
-            showSuccessMessage: false
-        }
+            showSuccessMessage: false,
+            }
 
         this.handleChange = this.handleChange.bind(this)
         this.loginClicked = this.loginClicked.bind(this)
@@ -27,7 +29,36 @@ class Login extends Component {
         )
     }
 
+    validate = () => {
+        let emailError = "";
+        let passwordError = "";
+         
+        if (!this.state.email.includes('@')) {
+            emailError = 'invalid email';
+        }
+
+        if (!this.state.password) {
+            passwordError = 'Password cannot be empty, or Please recheck you password';
+        }
+        if(emailError) {
+            this.setState({emailError})
+            return false;
+        }
+
+        if (emailError || passwordError) {
+            this.setState({ emailError, passwordError });
+            return false;
+        }
+
+        return true;
+    }
+
     loginClicked() {
+        const isValid = this.validate();
+        if (!isValid) {
+            return false;    
+        }
+        
          AuthenticationService
              .executeJwtAuthenticationService(this.state.email, this.state.password)
              .then((response) => {
@@ -55,11 +86,24 @@ class Login extends Component {
                 <div className="container">
                     {this.state.hasLoginFailed && <div className="alert alert-danger">Invalid Credentials. Please enter valid E-mail/Password</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
-                    Email: <Input type="text" name="email" value={this.state.email} onChange={this.handleChange} />
+                    Email: <Input 
+                        type="text" 
+                        name="email" 
+                        value={this.state.email} 
+                        onChange={this.handleChange} 
+                    />
+                    <div style={{ fontSize: 12, color: "red" }}> {this.state.emailError} </div>
                     <br />
-                    Password: <Input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+                    Password: <Input 
+                        type="password" 
+                        name="password" 
+                        value={this.state.password} 
+                        onChange={this.handleChange} 
+                    />
+                    <div style={{ fontSize: 12, color: "red" }}> {this.state.passwordError} </div>
                     <br />
-                    <Button className="btn btn-success" onClick={this.loginClicked}>Login</Button>
+                    <Button 
+                        className="btn btn-success" onClick={this.loginClicked}>Login</Button>
                 </div>
                 <br />
                 <br />
