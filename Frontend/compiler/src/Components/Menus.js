@@ -1,11 +1,12 @@
 import { ListGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../Service/AuthenticationService';
+import 'react-pro-sidebar/dist/css/styles.css';
 
 const Menus = () => {
     const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
     return (
-        <ListGroup>
+       <ListGroup>
             <Link className="list-group-item list-group-item-action" to="/home">Home</Link> 
             <Link className="list-group-item list-group-item-action" to="/Ide">IDE</Link> 
             <Link className="list-group-item list-group-item-action" to="/compiler">Compiler</Link> 

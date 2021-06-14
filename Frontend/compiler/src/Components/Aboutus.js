@@ -43,7 +43,7 @@ const Aboutus = () => {
           <CardText>B.Tech Computer Science Student.</CardText>
           <a class="btn btn-danger btn-sm mr-2" href="mailto:6261harshal@gmail.com" target="_newtab">GMail</a>
           <a class="btn btn-primary btn-sm mr-2" href="https://www.linkedin.com/in/harshal-choudhary-615968170" target="_newtab">Linkedin</a>
-          <a class="btn btn-dark btn-sm" href="#" target="_newtab">Github</a>
+          <a class="btn btn-dark btn-sm" href="http://www.google.com" target="_newtab">Github</a>
           </CardBody>
         <CardFooter>
         <Badge color="warning" className="mr-2" pill>Frontend</Badge>
