@@ -70,7 +70,7 @@ public class CompileRequest {
 		}
 		
 		int status;
-		String[] docker = new String[] {"sudo","docker", "rmi", image};
+		String[] docker = new String[] {"docker", "rmi", image};
 		ProcessBuilder processbuild = new ProcessBuilder(docker);
 		Process process = processbuild.start();
 		status = process.waitFor();
@@ -81,7 +81,7 @@ public class CompileRequest {
 	private Result execProgram(String folder, String image) throws IOException, InterruptedException {
 		
 		int status;
-		String[] docker = new String[] {"sudo","docker", "image", "build", folder, "-t", image};
+		String[] docker = new String[] {"docker", "image", "build", folder, "-t", image};
 		ProcessBuilder processbuild = new ProcessBuilder(docker);
 		Process process = processbuild.start();
 		status = process.waitFor();
