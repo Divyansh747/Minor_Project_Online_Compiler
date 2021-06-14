@@ -19,6 +19,7 @@ import com.divyansh.online.compiler.Entity.RegistrationEntity;
 import com.divyansh.online.compiler.Service.CompileRequest;
 import com.divyansh.online.compiler.Service.RegistrationService;
 
+@CrossOrigin
 @RestController
 public class ProgramController {
 	
