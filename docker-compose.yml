@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  compiler-db:
+    image: mysql
+    restart: on-failure
+      #network_mode: "host"
+    ports: 
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=compiler
+      - MYSQL_USER=compiler
+      - MYSQL_PASSWORD=compiler
+    networks:
+      - backend
+
+  compiler-frontend:
+    image: compiler-frontend
+    restart: on-failure
+      #network_mode: "host"
+    depends_on:
+      - compiler-backend
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+ 
+  compiler-backend:
+    image: compiler-backend
+    restart: on-failure
+      #network_mode: "host"
+    depends_on:
+      - compiler-db
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_HOST=compiler-db
+      - DATABASE_USER=compiler
+      - DATABASE_PASSWORD=compiler
+      - DATABASE_NAME=compiler
+      - DATABASE_PORT=3306
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - backend
+      - frontend
+
+networks:
+  backend:
+  frontend:
