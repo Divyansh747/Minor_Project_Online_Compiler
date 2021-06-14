@@ -1,4 +1,4 @@
-FROM ubuntu_cpp
+FROM centos_cpp:v1
 WORKDIR /mnt
 USER root
 ADD . .
