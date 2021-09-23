@@ -76,7 +76,8 @@ sudo docker-compose up
 - Wait for few minutes to complete deployment process
 - To verify project is running open below URL in browser
 ```
-http://localhost:8080
+http://localhost:8080 (Backend)
+http://localhost:3000 (Frontend)
 ```
 (Note* you can replace localhost with your system IP where you deployed project)
 
